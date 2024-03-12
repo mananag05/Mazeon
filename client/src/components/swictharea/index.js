@@ -5,7 +5,9 @@ import logo from "../../../public/mazeon_logo.png";
 import { useState } from "react";
 import { BsChevronDoubleDown } from "react-icons/bs";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
-
+import { toggle } from '@/redux/slices/formdata'
+import { useDispatch, useSelector } from "react-redux";
+import { SwitchDesc } from "../data/formswitch";
 import "./index.scss";
 import Link from "next/link";
 
@@ -13,25 +15,17 @@ import Link from "next/link";
 
   const SwitchArea = () => {
 
+    const dispatch = useDispatch();
+    const Authmode = useSelector((state) => state.TOGGLE)
+    
 
-  const [Authmode, setAuthmode] = useState("signin")
+    console.log(Authmode)
+  
   const SWITCH_FORM = () => {
     if(Authmode === "signin"){
-      setAuthmode("signup")
+      dispatch(toggle("signin"))
     } else {
-      setAuthmode("signin")
-    }
-  };
-
-
-  const SwitchDesc = {
-    signup: {
-      desc: "To keep Connected With Us Please Login With Your Personal Info",
-      button: "Sign In",
-    },
-    signin: {
-       desc: "To keep Connected With Us Please Sign In With Your Personal Info",
-        button: "Sign up",
+      dispatch(toggle("signup"))
     }
   };
 
@@ -47,7 +41,14 @@ import Link from "next/link";
       </div>
       <div className="lg:basis-9/12 flex flex-col items-center justify-center">
         <span className="font-mono text-3xl text-logthemstext mb-3">
-          Welcome Back !
+            {Authmode === "signin" ? (
+          <>
+                {SwitchDesc.signin.message}
+          </>) : (
+            <>
+                {SwitchDesc.signup.message}
+            </>
+          )}
         </span>
         <p className="text-center w-3/5 m-3 text-lighttext/65">
           {Authmode === "signin" ? (

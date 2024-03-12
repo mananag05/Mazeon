@@ -1,4 +1,5 @@
 import "./globals.css"
+import { ReduxProvider } from "@/redux/provider"
 
 export const metadata = {
   title: 'Mazeon',
@@ -14,7 +15,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
  return (
     <html lang="en">
-      <body className="bg-body">{children}</body>
+      <body className="bg-body">
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
+        </body>
     </html>
   )
 }
