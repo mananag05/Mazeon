@@ -1,3 +1,5 @@
+"use client"
+
 import { createSlice } from "@reduxjs/toolkit";
 
 
@@ -6,6 +8,7 @@ const FormDataSlice = createSlice({
      initialState : "signin",
      reducers : {
         toggle : (curval , action) => {
+            console.log(action.payload)
             if(action.payload === "signin"){
                 return "signup"
               } else {

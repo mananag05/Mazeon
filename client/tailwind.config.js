@@ -18,7 +18,8 @@ module.exports = {
       logthemstext : '#ce9c53',
       body : '#3b6278',
       lighttext : '#d7af74',
-      hovers : '#46738d'
+      hovers : '#46738d',
+      white : '#eef3f7',
     }
   },
   plugins: [],

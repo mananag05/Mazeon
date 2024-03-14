@@ -2,32 +2,17 @@
 
 import Image from "next/image";
 import logo from "../../../public/mazeon_logo.png";
-import { useState } from "react";
 import { BsChevronDoubleDown } from "react-icons/bs";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
-import { toggle } from '@/redux/slices/formdata'
-import { useDispatch, useSelector } from "react-redux";
 import { SwitchDesc } from "../data/formswitch";
 import "./index.scss";
-import Link from "next/link";
-
+import { SwitchButton } from "../switchbutton";
+import { useSelector } from "react-redux";
 
 
   const SwitchArea = () => {
 
-    const dispatch = useDispatch();
     const Authmode = useSelector((state) => state.TOGGLE)
-    
-
-    console.log(Authmode)
-  
-  const SWITCH_FORM = () => {
-    if(Authmode === "signin"){
-      dispatch(toggle("signin"))
-    } else {
-      dispatch(toggle("signup"))
-    }
-  };
 
   return (
     <div className="hidden lg:bg-logtheme lg:basis-2/5 lg:flex lg:flex-col lg:border-r-2 lg:border-logthemstext rounded-l-lg">
@@ -60,19 +45,7 @@ import Link from "next/link";
             </>
           )}
         </p>
-        <button
-          onClick={() => SWITCH_FORM()}
-          className="text-logthemstext bg-body p-2 m-3 rounded-lg hover:bg-hovers"
-        >
-            {Authmode === "signin" ? (
-          <>
-                {SwitchDesc.signin.button}
-          </>) : (
-            <>
-                {SwitchDesc.signup.button}
-            </>
-          )}
-        </button>
+        <SwitchButton />
       </div>
       <div className="lg:basis-2/12 flex flex-row">
         <span className="text-3xl text-body hover:text-hovers cursor-pointer ml-6 mt-auto mb-6">
