@@ -4,13 +4,13 @@ export const SwitchDesc = {
       desc: "To keep Connected With Us Please Login With Your Personal Info",
       button: "Sign In",
       message : "Welcome Back !",
-      switchmsg : "If u don't have any account , please"
+      switchmsg : "If u don't have any account , please "
       
     },
     signup: {
        desc: "To keep Connected With Us Please Sign Up With Your Personal Info",
         button: "Sign up",
         message : "Create Account !",
-        switchmsg : "Already have an Account ?"
+        switchmsg : "Already have an Account ? "
     }
   };

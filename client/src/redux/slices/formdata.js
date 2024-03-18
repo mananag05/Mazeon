@@ -7,8 +7,7 @@ const FormDataSlice = createSlice({
      name : "FormDataSlice",
      initialState : "signin",
      reducers : {
-        toggle : (curval , action) => {
-            console.log(action.payload)
+        toggle : (curval, action ) => {
             if(action.payload === "signin"){
                 return "signup"
               } else {

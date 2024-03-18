@@ -19,8 +19,9 @@ export const SwitchButton = () => {
 
     return (
         <button
+        type="button"
         onClick={() => SWITCH_FORM(Authmode , dispatch , toggle)}
-        className="text-logthemstext bg-body p-2 m-3 rounded-lg hover:bg-hovers"
+        className="text-base lg:text-logthemstext lg:bg-body lg:p-2 lg:m-3 lg:rounded-lg lg:hover:bg-hovers"
       >
           {Authmode === "signin" ? (
         <>

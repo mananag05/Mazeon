@@ -6,6 +6,7 @@ import { MdOutlineEmail, MdLockOutline } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { SwitchButton } from "../switchbutton";
 
 const AuthForm = () => {
   const FormType = useSelector((state) => state.TOGGLE);
@@ -126,12 +127,13 @@ const AuthForm = () => {
             Submit
           </button>
         </div>
-        <div className="text-xs lg:hidden">
+        <div className="text-xs flex flex-row lg:hidden">
           {FormType === "signin" ? (
             <>{SwitchDesc.signup.switchmsg}</>
           ) : (
             <>{SwitchDesc.signin.switchmsg}</>
           )}
+          <SwitchButton />
         </div>
       </form>
     </div>
