@@ -18,8 +18,13 @@ const AuthForm = () => {
     UserOrMail: "",
   });
 
+  const HandleGoogleLogin = () => {
+    window.open("http://localhost:8080/auth/google/callback" ,"_self")
+  }
+
   const HandleFormSubmit = (event) => {
     event.preventDefault();
+
     SetFormData({
       Username: "",
       Password: "",
@@ -116,7 +121,7 @@ const AuthForm = () => {
           </div>
         </div>
         <div className="flex mt-6">
-          <div className="flex ml-1 justify-center items-center w-4/6 bg-white rounded-lg hover:bg-white/90 hover:cursor-pointer">
+          <div onClick={HandleGoogleLogin} className="flex ml-1 justify-center items-center w-4/6 bg-white rounded-lg hover:bg-white/90 hover:cursor-pointer">
             <div className="text-2xl ml-2 mr-2">
               <FcGoogle />
             </div>
@@ -127,12 +132,14 @@ const AuthForm = () => {
             Submit
           </button>
         </div>
-        <div className="text-xs flex flex-row lg:hidden">
+        <div className="mt-5 text-white text-base flex  lg:hidden items-center justify-center">
+          <span className="mr-4">
           {FormType === "signin" ? (
             <>{SwitchDesc.signup.switchmsg}</>
           ) : (
             <>{SwitchDesc.signin.switchmsg}</>
           )}
+          </span>
           <SwitchButton />
         </div>
       </form>
