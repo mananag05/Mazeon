@@ -26,7 +26,11 @@ const UsersCollection = require("./models/UsersSchema")
 app.use(session({
     secret : "my-secret",
     resave : false,
-    saveUninitialized : true
+    saveUninitialized : true,
+    cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+      },
+
 }))
 
 app.use(passport.initialize());
@@ -40,7 +44,6 @@ passport.use(
         scope : ["profile" , "email"]
     },
     async(acessToken , refreshToken , profile, done) => {
-        console.log(profile)
         try{
             let user = await UsersCollection.findOne({googleId : profile.id});
             if(!user){
@@ -79,6 +82,9 @@ app.get("/auth/google/callback" , passport.authenticate("google",{
     failureRedirect : `${process.env.CLIENT_URL }`
 }))
 
+app.get('/login/success', async (req,res) => {
+    console.log("req" , req.user)
+})
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -8,6 +8,7 @@ import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { SwitchButton } from "../switchbutton";
 
+
 const AuthForm = () => {
   const FormType = useSelector((state) => state.TOGGLE);
 
@@ -19,7 +20,7 @@ const AuthForm = () => {
   });
 
   const HandleGoogleLogin = () => {
-    window.open("http://localhost:8080/auth/google/callback" ,"_self")
+    window.open(`http://localhost:8080/auth/google/callback` ,"_self")
   }
 
   const HandleFormSubmit = (event) => {
