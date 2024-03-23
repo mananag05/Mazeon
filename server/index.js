@@ -44,21 +44,28 @@ passport.use(
         scope : ["profile" , "email"]
     },
     async(acessToken , refreshToken , profile, done) => {
+    
         try{
-            let user = await UsersCollection.findOne({googleId : profile.id});
+            let user = await UsersCollection.findOne({email : profile.email});
+            let UserData = {};
             if(!user){
                 user = new UsersCollection({
-                    googleId : profile.id,
                     displayName : profile.displayName,
                     email : profile.emails[0].value,
                     image : profile.photos[0].value
                 })
 
-                await user.save();
+                UserData = {
+                    googleid : profile.id,
+                    displayName : profile.displayName,
+                    email : profile.emails[0].value,
+                    image : profile.photos[0].value
+                }
 
+                await user.save();
             }
 
-            return done(null,user)
+            return done(null,UserData)
 
         } catch (error) {
             return done(error, null)
@@ -68,23 +75,37 @@ passport.use(
 )
 
 
-passport.serializeUser((user,done) => {
-    done(null,user)
+passport.serializeUser((UserData,done) => {
+    console.log("serialized user data" , UserData)
+    done(null,UserData)
 })
-passport.deserializeUser((user,done) => {
-    done(null,user)
+passport.deserializeUser((UserData,done) => {
+    console.log("deserialized user data" , UserData)
+    done(null,UserData)
 })
 
 app.get("/auth/google" , passport.authenticate("google" , {scope : ["profile" , "email"]}))
 
 app.get("/auth/google/callback" , passport.authenticate("google",{
-    successRedirect : `${process.env.CLIENT_URL}/offline`,
+    successRedirect : `${process.env.CLIENT_URL}/home`,
     failureRedirect : `${process.env.CLIENT_URL }`
 }))
 
-app.get('/login/success', async (req,res) => {
-    console.log("req" , req.user)
-})
+app.get('/login/success', async (req, res) => {
+    try {
+        if (!req.user) {
+            console.log("req", req.user);
+            res.status(403).json({ msg: "not a user" });
+        } else {
+            console.log("req", req.user);
+            res.status(200).json({ msg: "welcome" });
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ msg: "Internal Server Error" });
+    }
+});
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -4,7 +4,7 @@ import { SwitchDesc } from "../data/formswitch";
 import { useSelector } from "react-redux";
 import { MdOutlineEmail, MdLockOutline } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { SwitchButton } from "../switchbutton";
 
@@ -19,12 +19,40 @@ const AuthForm = () => {
     UserOrMail: "",
   });
 
+  useEffect(() => {
+    // Update FormData whenever FormType changes
+
+    SetFormData({
+      Username: "",
+      Password: "",
+      Email: "",
+      UserOrMail: "",
+    });
+  }, [FormType]);
+  
+
   const HandleGoogleLogin = () => {
     window.open(`http://localhost:8080/auth/google/callback` ,"_self")
   }
 
-  const HandleFormSubmit = (event) => {
+  const HandleFormSubmit = async (event) => {
+
     event.preventDefault();
+
+    if(FormType === 'signin'){
+      // const response = await fetch(`http://localhost:8080/`, {
+      //   method: "POST",
+      //   headers: {
+      //     "content-type": "application/json",
+      //   },
+      //   body: JSON.stringify(FormData),
+      // });
+
+      console.log("signup")
+    } else {
+      
+    }
+
 
     SetFormData({
       Username: "",
