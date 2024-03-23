@@ -8,7 +8,7 @@ const Home = () => {
 
     const getUser = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/login/success`,{
+            const response = await fetch(`http://localhost:8080/auth/login/success`,{
                 method : 'GET',
                 headers: {
                     "content-type": "application/json",
