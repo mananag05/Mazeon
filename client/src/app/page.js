@@ -1,8 +1,16 @@
+"use client"
+
 import SwitchArea from '../components/swictharea'
 import AuthForm from '@/components/AuthForm';
 import Image from 'next/image';
-export default function Home() {
+import { useEffect } from 'react';
+export default function Root() {
   return (
+
+ 
+
+
+
     <div>
       <div className="h-screen lg:shadow-2xl flex flex-col lg:flex-row lg:p-5 p-6">
         <div className="lg:hidden flex flex-row basis-1/12">

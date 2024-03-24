@@ -14,25 +14,15 @@ passport.use(
     
         try{
             let user = await UsersCollection.findOne({email : profile.email});
-            let UserData = {};
             if(!user){
                 user = new UsersCollection({
                     displayName : profile.displayName,
                     email : profile.emails[0].value,
                     image : profile.photos[0].value
                 })
-
-                UserData = {
-                    googleid : profile.id,
-                    displayName : profile.displayName,
-                    email : profile.emails[0].value,
-                    image : profile.photos[0].value
-                }
-
                 await user.save();
             }
-
-            return done(null,UserData)
+            return done(null,user)
 
         } catch (error) {
             return done(error, null)
@@ -42,11 +32,11 @@ passport.use(
 )
 
 
-passport.serializeUser((UserData,done) => {
-    done(null,UserData)
+passport.serializeUser((user,done) => {
+    done(null,user)
 })
-passport.deserializeUser((UserData,done) => {
-    done(null,UserData)
+passport.deserializeUser((user,done) => {
+    done(null,user)
 })
 
 module.exports = passport;

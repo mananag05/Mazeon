@@ -1,26 +1,37 @@
 "use client"
 
-import { useEffect , useState} from "react";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import { useState } from "react";
 
 const Home = () => {
 
-    const [UserData, SetUserdata] = useState({});
+    const [Loader, SetLoader] = useState(true)
 
-    const getUser = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/auth/login/success`,{
-                method : 'GET',
-                headers: {
-                    "content-type": "application/json",
-                  },
-                credentials : 'include'
-            })
 
-            const json = await response.json()
-            console.log(json)
-        } catch (error) {
-            
+    const getUser =  () => {
+        const AuthToken = localStorage.getItem("AuthToken")
+      
+        if(!AuthToken){
+            redirect('/')
         }
+        // try {
+        //     const response = await fetch(`http://localhost:8080/auth/login/success`,{
+        //         method : 'GET',
+        //         headers: {
+        //             "content-type": "application/json",
+        //           },
+        //         credentials : 'include'
+        //     })
+        //     if(response.ok){
+        //         const json = await response.json()
+        //         localStorage.setItem("AuthToken" , json.AuthToken)
+        //         console.log(json)
+        //     }
+        // } catch (error) {
+            
+        // }
+        SetLoader(false)
     }
     
     useEffect(() => {
@@ -29,7 +40,11 @@ const Home = () => {
 
     return (
         <div>
-            You are on home page
+            {Loader ? (<>
+                Loading...
+            </>) : (<>
+                You are on home page
+            </>)}
         </div>
     );
 }
