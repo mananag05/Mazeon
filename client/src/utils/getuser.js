@@ -1,15 +1,34 @@
-import { redirect } from "next/navigation";
+"use client"
 
-
-export const getUser =  (SetLoader) => {
+export const getUser = async ( Pathname) => {
+    let redirectto = '/'
     const AuthToken = localStorage.getItem("AuthToken");
-
     if(AuthToken){
 
+            const response = await fetch ('http://localhost:8080/auth/user' , {
+                method : 'POST',
+                headers : {
+                    "content-type": "application/json",
+                    authorization: AuthToken,
+                }
+            })
+
+            if(response.ok){
+                if(Pathname == '/'){
+                    redirectto = '/home'
+                } else {
+                    redirectto = `${Pathname}`
+                }
+                console.log(await response.json())
+            } else {
+                localStorage.removeItem("AuthToken")
+            }
+        
+         
     }
-    if(!AuthToken){
-            let success = 1;
-            const init = async () => {
+    else {
+           
+            
                 const response = await fetch(`http://localhost:8080/auth/login/success`,{
                     method : 'GET',
                     headers: {
@@ -20,17 +39,11 @@ export const getUser =  (SetLoader) => {
                 const json = await response.json()
                 if(response.ok){
                     localStorage.setItem("AuthToken" , json.AuthToken)
-                    return
-                } 
-                success = 0;
-            }
-            init();
+                    redirectto = '/home'
+                }
             
-            if(success == 1){
-                redirect('/')
-            }
-     
-    }
    
-    SetLoader(false)
+        
+    }
+    return redirectto
 }

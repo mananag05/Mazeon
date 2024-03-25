@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('../config/passport-setup')
 const { GoogleLoginSucess } = require('../controllers/googlesucess')
 const { GetUser } = require('../controllers/getuser')
+const { auth } = require('../middlewares/checktokenvalidity')
 
 router.post("/login", );
 
@@ -17,7 +18,7 @@ router.get("/google/callback" , passport.authenticate("google",{
 
 router.get('/login/success', GoogleLoginSucess);
 
-router.get('/user', GetUser);
+router.post('/user', auth , GetUser);
 
 
 

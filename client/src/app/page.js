@@ -6,15 +6,24 @@ import Image from 'next/image';
 import { useEffect , useState } from 'react';
 import { getUser } from '@/utils/getuser';
 import LoaderLayout from '@/components/cssloader';
-
+import { usePathname , useRouter } from 'next/navigation';
 
 
 export default function Root() {
-
+  const Pathname = usePathname()
+  const router = useRouter();
   const [Loader, SetLoader] = useState(true);
 
   useEffect(() => {
-    getUser(SetLoader);
+    const init = async () => {
+      const redirectTo = await getUser(Pathname);
+      router.push(`${redirectTo}`);
+      if (redirectTo == Pathname){
+        SetLoader(false);
+      }
+      
+    };
+    init();
   }, []);
 
 

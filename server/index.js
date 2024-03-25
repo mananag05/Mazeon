@@ -34,8 +34,6 @@ const AuthRoutes = require('./routes/authorisation');
 app.use('/Auth', AuthRoutes)
 
 
-
-
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`App Listening On http:/localhost:${PORT}`)
