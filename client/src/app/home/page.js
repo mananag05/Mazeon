@@ -22,12 +22,23 @@ const Home = () => {
         init();
       }, []);
 
+      const Logout = () => {
+            localStorage.removeItem("AuthToken")
+            window.open("http://localhost:8080/logout" , "_self")
+      }
+
     return (
         <div>
             {Loader ? (<>
                 <LoaderLayout />
             </>) : (<>
-                You are on home page
+            <div>
+            You are on home page
+            </div>
+                
+                <button onClick={Logout} className="text-white bg-logthemstext p-2 m-5">
+                    Logout
+                </button>
             </>)}
         </div>
     );

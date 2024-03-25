@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken')
 
 async function GoogleLoginSucess (req, res){
     try {
-        if (!req.user) {
-            console.log("Not a validate user");
+        if (!req.user){
             res.status(403).json({ msg: "Invalid" });
         } else {
             const expiryDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days from now

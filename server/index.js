@@ -34,6 +34,14 @@ const AuthRoutes = require('./routes/authorisation');
 app.use('/Auth', AuthRoutes)
 
 
+app.get("/logout", (req,res,next) => {
+    req.logout(function(err){
+        if(err){return next(err)}
+        res.redirect(process.env.CLIENT_URL)
+    }) 
+})
+
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`App Listening On http:/localhost:${PORT}`)
