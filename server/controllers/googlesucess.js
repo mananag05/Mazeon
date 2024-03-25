@@ -4,7 +4,7 @@ async function GoogleLoginSucess (req, res){
     try {
         if (!req.user) {
             console.log("Not a validate user");
-            res.status(403).json({ msg: "not a user" });
+            res.status(403).json({ msg: "Invalid" });
         } else {
             console.log(req.user)
             const expiryDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
