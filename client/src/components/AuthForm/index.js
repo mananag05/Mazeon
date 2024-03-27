@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { SwitchDesc } from "../data/formswitch";
 import { useSelector } from "react-redux";
@@ -7,10 +7,12 @@ import { FaRegUser } from "react-icons/fa6";
 import { useState , useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { SwitchButton } from "../switchbutton";
-
+import { toast } from "react-toastify";
 
 const AuthForm = () => {
   const FormType = useSelector((state) => state.TOGGLE);
+
+
 
   const [FormData, SetFormData] = useState({
     Username: "",
@@ -48,9 +50,9 @@ const AuthForm = () => {
         body: JSON.stringify(FormData),
       }); 
       
-      if(response.ok){
-        console.log(await response.json())
-      }
+      const json = await response.json();
+      console.log(json)
+      toast(json.msg)
 
 
       
@@ -90,6 +92,7 @@ const AuthForm = () => {
                 <input
                   className="outline-none border-none bg-logtheme w-11/12 text-white lg:bg-body"
                   placeholder="Email"
+                  type="email"
                   value={FormData.Email}
                   onChange={(e) =>
                     SetFormData({ ...FormData, Email: e.target.value })
@@ -147,6 +150,7 @@ const AuthForm = () => {
               className="outline-none border-none bg-logtheme lg:bg-body w-11/12 text-white"
               placeholder="Password"
               required
+              type="password"
               value={FormData.Password}
               onChange={(e) =>
                 SetFormData({ ...FormData, Password: e.target.value })

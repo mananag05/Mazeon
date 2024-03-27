@@ -9,6 +9,8 @@ import LoaderLayout from '@/components/cssloader';
 import { usePathname , useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { SetProfile } from '@/redux/slices/UserProfile';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Root() {
   const dispatch = useDispatch()
@@ -32,6 +34,7 @@ export default function Root() {
 
   return (
     <div>
+      <ToastContainer />
       {Loader ? (
       <div>
           <LoaderLayout />
