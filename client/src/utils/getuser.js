@@ -1,7 +1,10 @@
 "use client"
 
 export const getUser = async ( Pathname) => {
-    let redirectto = '/'
+    let data = {
+        path : '/',
+        user : {}
+    }
     const AuthToken = localStorage.getItem("AuthToken");
     if(AuthToken){
 
@@ -15,11 +18,11 @@ export const getUser = async ( Pathname) => {
 
             if(response.ok){
                 if(Pathname == '/'){
-                    redirectto = '/home'
+                    data.path = '/home'
                 } else {
-                    redirectto = `${Pathname}`
+                    data.path = `${Pathname}`
                 }
-                console.log(await response.json())
+                    data.user = await response.json();
             } else {
                 localStorage.removeItem("AuthToken")
             }
@@ -27,8 +30,6 @@ export const getUser = async ( Pathname) => {
          
     }
     else {
-           
-            
                 const response = await fetch(`http://localhost:8080/auth/login/success`,{
                     method : 'GET',
                     headers: {
@@ -39,11 +40,8 @@ export const getUser = async ( Pathname) => {
                 const json = await response.json()
                 if(response.ok){
                     localStorage.setItem("AuthToken" , json.AuthToken)
-                    redirectto = '/home'
+                    data.path = '/home'
                 }
-            
-   
-        
     }
-    return redirectto
+    return data
 }

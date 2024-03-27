@@ -7,21 +7,24 @@ import { useEffect , useState } from 'react';
 import { getUser } from '@/utils/getuser';
 import LoaderLayout from '@/components/cssloader';
 import { usePathname , useRouter } from 'next/navigation';
-
+import { useDispatch } from 'react-redux';
+import { SetProfile } from '@/redux/slices/UserProfile';
 
 export default function Root() {
+  const dispatch = useDispatch()
   const Pathname = usePathname()
   const router = useRouter();
   const [Loader, SetLoader] = useState(true);
 
+     
   useEffect(() => {
     const init = async () => {
-      const redirectTo = await getUser(Pathname);
-      router.push(`${redirectTo}`);
-      if (redirectTo == Pathname){
-        SetLoader(false);
+      const data = await getUser(Pathname);
+      dispatch(SetProfile(data.user))
+      router.push(`${data.path}`);
+      if (data.path == Pathname){
+        SetLoader(false); 
       }
-      
     };
     init();
   }, []);

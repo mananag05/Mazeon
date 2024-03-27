@@ -4,10 +4,13 @@ const passport = require('../config/passport-setup')
 const { GoogleLoginSucess } = require('../controllers/googlesucess')
 const { GetUser } = require('../controllers/getuser')
 const { auth } = require('../middlewares/checktokenvalidity')
+const { signup } = require('../controllers/LogSign')
+
+
 
 router.post("/login", );
 
-router.post("/signup", );
+router.post("/signup", signup );
 
 router.get("/google" , passport.authenticate("google" , {scope : ["profile" , "email"]}))
 

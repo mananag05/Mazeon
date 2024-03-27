@@ -40,15 +40,20 @@ const AuthForm = () => {
     event.preventDefault();
 
     if(FormType === 'signin'){
-      // const response = await fetch(`http://localhost:8080/`, {
-      //   method: "POST",
-      //   headers: {
-      //     "content-type": "application/json",
-      //   },
-      //   body: JSON.stringify(FormData),
-      // });
+      const response = await fetch(`http://localhost:8080/auth/signup`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(FormData),
+      }); 
+      
+      if(response.ok){
+        console.log(await response.json())
+      }
 
-      console.log("signup")
+
+      
     } else {
       
     }

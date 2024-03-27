@@ -18,7 +18,8 @@ passport.use(
                 user = new UsersCollection({
                     displayName : profile.displayName,
                     email : profile.emails[0].value,
-                    image : profile.photos[0].value
+                    image : profile.photos[0].value,
+                    verified : true
                 })
                 await user.save();
             }

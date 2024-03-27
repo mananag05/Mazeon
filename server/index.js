@@ -7,6 +7,7 @@ const ConnectMongoAtlas = require("./config/connection")
 ConnectMongoAtlas(process.env.MONGO_CONNECTION_URI)
 const session = require("express-session")
 const passport = require('./config/passport-setup')
+app.use(bodyParser.json())
 
 app.use(
     cors({
@@ -14,8 +15,8 @@ app.use(
         methods : "GET,POST,PUT,DELETE",
         credentials : true,
         
-    })
-)
+    }))
+
 
 app.use(session({
     secret : "my-secret",
@@ -24,7 +25,6 @@ app.use(session({
     cookie: {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
       },
-
 }))
 
 app.use(passport.initialize());

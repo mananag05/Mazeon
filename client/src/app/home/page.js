@@ -11,13 +11,15 @@ const Home = () => {
     const Pathname = usePathname()
     const [Loader, SetLoader] = useState(true)
 
+ 
     useEffect(() => {
         const init = async () => {
-          const redirectTo = await getUser(Pathname);
-          router.push(`${redirectTo}`);
-          if (redirectTo == Pathname){
+          const data = await getUser(Pathname);
+          router.push(`${data.path}`);
+          if (data.path == Pathname){
             SetLoader(false);
           }
+          
         };
         init();
       }, []);
@@ -33,7 +35,7 @@ const Home = () => {
                 <LoaderLayout />
             </>) : (<>
             <div>
-            You are on home page
+                You are on home page
             </div>
                 
                 <button onClick={Logout} className="text-white bg-logthemstext p-2 m-5">
