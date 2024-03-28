@@ -1,7 +1,7 @@
 const UsersCollection = require("../models/UsersSchema");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const { transporter } = require('../config/nodemailer')
+const { pub } = require("../config/redis")
 
 async function signup(req, res) {
   // Check if required fields are present in req.body
@@ -41,21 +41,17 @@ async function signup(req, res) {
 
     await user.save();
 
+    const VerificationLink = `${process.env.CLIENT_URL}/verify/mail/user?mail=${req.body.Email}&token=${token}`;
 
     let details = {
         from : process.env.USER,
         to : req.body.Email,
-        subject : "testing node mailer",
-        text : "my first mail sent"
+        subject : "Verify Your Email",
+        html : `<p>Hello ${req.body.Username},</p><p>Thank you for signing up! Please click <a href="${VerificationLink}">here</a> to verify your email address.</p>`
     }
-    
-    transporter.sendMail(details, (err) => {
-        if(err) {
-            console.log("An Err Occured :", err)
-        } else {
-            console.log("email sent")
-        }
-    })
+
+    await pub.publish("SENDMAILS" , JSON.stringify(details))
+
     return res.status(200).json({ msg: "Account Created Successfully" });
   }
 }

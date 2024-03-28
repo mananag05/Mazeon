@@ -40,26 +40,33 @@ const AuthForm = () => {
   const HandleFormSubmit = async (event) => {
 
     event.preventDefault();
-
-    if(FormType === 'signin'){
-      const response = await fetch(`http://localhost:8080/auth/signup`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(FormData),
-      }); 
-      
-      const json = await response.json();
-      console.log(json)
-      toast(json.msg)
-
-
-      
-    } else {
+    try {
+      if(FormType === 'signin'){
+        const response = await fetch(`http://localhost:8080/auth/signup`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(FormData),
+        }); 
+        
+        const json = await response.json();
+        if(response.ok){
+          toast.success(`${json.msg}`,{
+            theme : "dark"
+          })
+        } else {
+          toast.error(`${json.msg}`, {
+            theme : "dark"
+          })
+        } 
+       
+      } 
+  
+    } catch (error) {
       
     }
-
+    
 
     SetFormData({
       Username: "",
