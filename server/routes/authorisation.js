@@ -4,7 +4,7 @@ const passport = require('../config/passport-setup')
 const { GoogleLoginSucess } = require('../controllers/googlesucess')
 const { GetUser } = require('../controllers/getuser')
 const { auth } = require('../middlewares/checktokenvalidity')
-const { signup } = require('../controllers/LogSign')
+const { signup , verifyuser } = require('../controllers/LogSign')
 
 
 
@@ -23,6 +23,7 @@ router.get('/login/success', GoogleLoginSucess);
 
 router.post('/user', auth , GetUser);
 
-
+router.post('/verify', verifyuser )
 
 module.exports = router;
+

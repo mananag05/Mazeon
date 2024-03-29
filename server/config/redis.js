@@ -23,8 +23,6 @@ sub.on("message", (channel, message) => {
     transporter.sendMail(ParsedDetails, (err) => {
       if (err) {
         console.log("An Err Occured :", err);
-      } else {
-        console.log("email sent");
       }
     });
   }

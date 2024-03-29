@@ -31,7 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const AuthRoutes = require('./routes/authorisation');
-app.use('/Auth', AuthRoutes)
+app.use('/auth', AuthRoutes)
 
 
 app.get("/logout", (req,res,next) => {
