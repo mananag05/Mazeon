@@ -6,11 +6,14 @@ import LoaderLayout from "@/components/cssloader";
 import { BaseUrl } from "@/components/data/baseurl";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { toggle } from "@/redux/slices/formdata";
 
 const VERIFY = () => {
   const router = useRouter();
   const [Loader, SetLoader] = useState(true);
   const [verified, SetVerified] = useState(false);
+  const dispatch = useDispatch();
 
   const params = useSearchParams();
 
@@ -28,13 +31,19 @@ const VERIFY = () => {
     if (response.ok) {
       console.log(await response.json());
       SetVerified(true);
-      SetLoader(false);
     }
+    SetLoader(false);
   };
 
   useEffect(() => {
     VerifyUser();
   }, []);
+
+
+  const REDIRECT = () => {
+        router.push("/")
+  }
+
 
   return (
     <div className="h-screen flex justify-center items-center">
@@ -43,21 +52,52 @@ const VERIFY = () => {
       ) : (
         <>
           {verified ? (
-            <div className="h-screen w-[97%] flex-col flex justify-center items-center bg-logtheme">
-              
-                <h1 className="text-3xl font-bold mb-8">Account Verified</h1>
-                <button className=" bg-logthemstext text-white font-bold py-2 px-4 rounded">
-                  Click Me
+            <div className="h-[97%] w-[98%] flex-col flex bg-logtheme">
+              <div className="flex flex-row items-center ">
+              <Image
+                className="m-10"
+                src="/mazeon_logo.png"
+                priority
+                alt=""
+                width={70}
+                height={70}
+              />
+              <span className="text-2xl font-mono text-logthemstext">
+                  Mazeon
+                </span>
+              </div>
+              <div className="mt-20 flex items-center justify-center flex-col">
+                <h1 className="text-center text-2xl font-mono text-green font-bold mb-8">Account Verified Successfully</h1>
+                <button onClick={() => REDIRECT()} className=" bg-logthemstext hover:bg-lighttext text-white font-bold py-2 px-4 rounded">
+                  Login
                 </button>
-           
+              </div>
             </div>
           ) : (
-            <div className="min-h-screen flex flex-col justify-center items-center">
-              <h1 className="text-3xl font-bold mb-8">Some Error Occured</h1>
-              <button className="bg-logthemstext font-bold py-2 px-4 rounded">
-                Click Me
+            <div className="h-[97%] w-[98%] flex-col flex bg-logtheme">
+               <div className="flex flex-row items-center ">
+              <Image
+                className="m-10"
+                src="/mazeon_logo.png"
+                priority
+                alt=""
+                width={70}
+                height={70}
+              />
+              
+                <span className="text-2xl font-mono text-logthemstext">
+                  Mazeon
+                </span>
+              </div>
+              <div className="mt-20 flex items-center justify-center flex-col">
+              <h1 className="font-mono text-center text-red text-2xl font-bold mb-8">Iternal Server Error</h1>
+              <button onClick={() => REDIRECT()} className=" bg-logthemstext hover:bg-lighttext text-white font-bold py-2 px-4 rounded">
+                  Go To Home
               </button>
-            </div>
+              </div>
+              
+              </div>
+              
           )}
         </>
       )}

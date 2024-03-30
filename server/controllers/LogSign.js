@@ -73,7 +73,24 @@ async function verifyuser(req, res) {
   }
 }
 
+
+async function login (req,res){
+  const user = await UsersCollection.findOne({email : req.body.Email})
+  if(!user){
+    return res.status(403).json({msg : "User Dosent Exists"})
+  }
+  const CheckPasword = await bcrypt.compare(req.body.Password , user.password)
+  if(!CheckPasword || user.body.Password == "google-acc"){
+     return res.status(403).json({msg : "Incorrect Password"})}
+  else if (!user.verified){
+     return res.status(403).json({msg : "Check Your Mail Inbox And Verify Your Account"})
+  }
+
+
+}
+
 module.exports = {
   signup,
   verifyuser,
+  login
 };

@@ -20,6 +20,8 @@ module.exports = {
       lighttext : '#d7af74',
       hovers : '#46738d',
       white : '#eef3f7',
+      green : '#b3ffb3',
+      red : '#ffb3b3',
     }
   },
   plugins: [],

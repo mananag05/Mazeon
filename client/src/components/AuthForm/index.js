@@ -8,17 +8,19 @@ import { useState , useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { SwitchButton } from "../switchbutton";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { toggle } from "@/redux/slices/formdata";
+
 
 const AuthForm = () => {
   const FormType = useSelector((state) => state.TOGGLE);
-
+  const dispatch = useDispatch();
 
 
   const [FormData, SetFormData] = useState({
     Username: "",
     Password: "",
     Email: "",
-    UserOrMail: "",
   });
 
   useEffect(() => {
@@ -28,7 +30,6 @@ const AuthForm = () => {
       Username: "",
       Password: "",
       Email: "",
-      UserOrMail: "",
     });
   }, [FormType]);
   
@@ -52,16 +53,40 @@ const AuthForm = () => {
         
         const json = await response.json();
         if(response.ok){
+          dispatch(toggle("signin"))
           toast.success(`${json.msg}`,{
             theme : "dark"
           })
+
         } else {
           toast.error(`${json.msg}`, {
             theme : "dark"
           })
-        } 
-       
-      } 
+        }
+      } else {
+        try {
+        
+          const response = await fetch("http://localhost:8080/auth/login",{
+            method : "POST",
+            headers : {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(FormData),
+          })
+
+          const json = await response.json();
+
+          if(response.ok){
+            console.log("sucess")
+          } else {
+            toast.error(`${json.msg}`)
+          }
+
+        } catch (error) {
+          
+        }
+
+      }
   
     } catch (error) {
       
@@ -72,7 +97,6 @@ const AuthForm = () => {
       Username: "",
       Password: "",
       Email: "",
-      UserOrMail: "",
     });
   };
 
@@ -138,9 +162,9 @@ const AuthForm = () => {
                   className="outline-none border-none lg:bg-body bg-logtheme w-11/12 text-white"
                   placeholder="Username / Email"
                   required
-                  value={FormData.UserOrMail}
+                  value={FormData.Email}
                   onChange={(e) =>
-                    SetFormData({ ...FormData, UserOrMail: e.target.value })
+                    SetFormData({ ...FormData, Email: e.target.value })
                   }
                 />
               </div>

@@ -4,11 +4,11 @@ const passport = require('../config/passport-setup')
 const { GoogleLoginSucess } = require('../controllers/googlesucess')
 const { GetUser } = require('../controllers/getuser')
 const { auth } = require('../middlewares/checktokenvalidity')
-const { signup , verifyuser } = require('../controllers/LogSign')
+const { signup , verifyuser , login} = require('../controllers/LogSign')
 
 
 
-router.post("/login", );
+router.post("/login", login );
 
 router.post("/signup", signup );
 
