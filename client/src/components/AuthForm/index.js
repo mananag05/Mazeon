@@ -10,11 +10,13 @@ import { SwitchButton } from "../switchbutton";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { toggle } from "@/redux/slices/formdata";
+import { useRouter } from "next/navigation";
 
 
 const AuthForm = () => {
   const FormType = useSelector((state) => state.TOGGLE);
   const dispatch = useDispatch();
+  const router = useRouter();
 
 
   const [FormData, SetFormData] = useState({
@@ -77,7 +79,9 @@ const AuthForm = () => {
           const json = await response.json();
 
           if(response.ok){
-            console.log("sucess")
+            localStorage.setItem("AuthToken" , json.AuthToken);
+            router.push("/home")
+
           } else {
             toast.error(`${json.msg}`)
           }
@@ -160,7 +164,7 @@ const AuthForm = () => {
               <div className="flex-auto">
                 <input
                   className="outline-none border-none lg:bg-body bg-logtheme w-11/12 text-white"
-                  placeholder="Username / Email"
+                  placeholder="Email"
                   required
                   value={FormData.Email}
                   onChange={(e) =>

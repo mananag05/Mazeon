@@ -2,6 +2,7 @@ const UsersCollection = require("../models/UsersSchema");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const { pub } = require("../config/redis");
+const jwt = require('jsonwebtoken')
 
 async function signup(req, res) {
   // Check if required fields are present in req.body
@@ -80,12 +81,19 @@ async function login (req,res){
     return res.status(403).json({msg : "User Dosent Exists"})
   }
   const CheckPasword = await bcrypt.compare(req.body.Password , user.password)
-  if(!CheckPasword || user.body.Password == "google-acc"){
+  if(!CheckPasword || req.body.Password == "google-acc"){
      return res.status(403).json({msg : "Incorrect Password"})}
   else if (!user.verified){
      return res.status(403).json({msg : "Check Your Mail Inbox And Verify Your Account"})
   }
 
+  const token = jwt.sign({
+    displayName : user.displayName,
+    email : user.email,
+    image : user.image
+  },
+    process.env.TOKEN_SECRET)
+    res.status(200).json({msg : "Succesfully Logged In" , AuthToken : token});
 
 }
 
