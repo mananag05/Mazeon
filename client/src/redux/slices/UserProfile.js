@@ -8,7 +8,7 @@ const UserProfile = createSlice({
      initialState : {},
      reducers : {
         SetProfile : (curval, action ) => {
-            console.log(action.payload)
+            return action.payload
         }
      }
 })

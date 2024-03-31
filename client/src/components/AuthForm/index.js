@@ -11,12 +11,14 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { toggle } from "@/redux/slices/formdata";
 import { useRouter } from "next/navigation";
+import Smallloader from "../smallloader";
 
 
 const AuthForm = () => {
   const FormType = useSelector((state) => state.TOGGLE);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [loader , SetLoader] = useState(false)
 
 
   const [FormData, SetFormData] = useState({
@@ -41,7 +43,7 @@ const AuthForm = () => {
   }
 
   const HandleFormSubmit = async (event) => {
-
+    SetLoader(true)
     event.preventDefault();
     try {
       if(FormType === 'signin'){
@@ -96,16 +98,19 @@ const AuthForm = () => {
       
     }
     
-
+    
     SetFormData({
       Username: "",
       Password: "",
       Email: "",
     });
+    SetLoader(false)
+    
   };
 
   return (
-    <div className="lg:bg-logtheme lg:basis-3/5 flex flex-col items-center justify-center rounded-r-lg">
+    <div className={`lg:bg-logtheme lg:basis-3/5 flex
+     flex-col items-center justify-center rounded-r-lg`}>
       <div className="flex justify-center items-center mt-10 mb-5">
         <span className="text-logthemstext text-2xl">
           {FormType === "signin" ? (
@@ -115,7 +120,11 @@ const AuthForm = () => {
           )}
         </span>
       </div>
-      <form onSubmit={(e) => HandleFormSubmit(e)} className="w-80">
+      {loader ? (
+          <Smallloader />
+      ) : (
+          <>
+            <form onSubmit={(e) => HandleFormSubmit(e)} className="w-80">
         {FormType === "signin" ? (
           <>
             <div className="flex flex-row items-center justify-center mt-6 bg-logtheme rounded-md lg:bg-body">
@@ -215,7 +224,10 @@ const AuthForm = () => {
           </span>
           <SwitchButton />
         </div>
-      </form>
+            </form>
+          </>
+      )}
+      
     </div>
   );
 };
