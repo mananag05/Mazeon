@@ -66,10 +66,10 @@ const Home = () => {
                     />
                   </div>
                 </div>
-                <div className={`ml-auto lg:hidden w-52 ${ MenuIsActive ? 'bg-logtheme fixed right-0 top-0' : ""}`}>
-                  <div className={`z-10 w-10 h-10 flex ml-auto mr-5 justify-center flex-col items-center cursor-pointer lg:hidden `} onClick={() => setMenuisActive(!MenuIsActive)}>
-                    <div className={`w-6 h-0.5 bg-lighttext rounded-full mt-2 transform transition-all duration-300 ${ MenuIsActive ? "rotate-160" : "rotate-0"}`}></div>
+                <div className={`ml-auto lg:hidden w-52 ${ MenuIsActive ? 'bg-logtheme fixed right-0 top-0 border-l-2 border-x-logthemstext ' : ""}`}>
+                  <div className={`transition ease-in-out z-10 w-10 h-10 flex mr-5 justify-center flex-col items-center cursor-pointer lg:hidden ${MenuIsActive ? 'ml-5' : 'ml-auto'} `} onClick={() => setMenuisActive(!MenuIsActive)}>
                     <div className={`w-6 h-0.5 bg-lighttext rounded-full mt-2 transform transition-all duration-300 ${ MenuIsActive ? "-rotate-160" : "rotate-0"}`}></div>
+                    <div className={`w-6 h-0.5 bg-lighttext rounded-full mt-2 transform transition-all duration-300 ${ MenuIsActive ? "rotate-160" : "rotate-0"}`}></div>
                   </div>
                   {MenuIsActive ? (<SideNav />) : (<></>)}
                 </div>
