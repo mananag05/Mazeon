@@ -7,8 +7,7 @@ import LoaderLayout from "@/components/cssloader";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { SetProfile } from "@/redux/slices/UserProfile";
-import Image from "next/image";
-import SideNav from "@/components/sidenav";
+import MainTopNav from "@/components/MainTopNav";
 
 
 const Home = () => {
@@ -16,8 +15,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const Pathname = usePathname();
   const [Loader, SetLoader] = useState(true);
-  const UserProfile = useSelector((state) => state.PROFILE);
-  const [MenuIsActive, setMenuisActive] = useState(false);
+  
 
   useEffect(() => {
     const init = async () => {
@@ -31,59 +29,36 @@ const Home = () => {
     init();
   }, []);
 
-  const Logout = () => {
-    localStorage.removeItem("AuthToken");
-    window.open("http://localhost:8080/logout", "_self");
-  };
+
+
+  const HandleSolo = () => {
+    router.push('/offline')
+  }
+
+  const HandleOnline = () => {
+
+  }
 
   return (
-    <div>
+    <div className="select-none">
       {Loader ? (
-        <>
-          <LoaderLayout />
-        </>
+      
+          <LoaderLayout/>
+       
       ) : (
-        <>
+    
           <div>
-              <div className="fornavbar w-[100%] flex flex-row items-center">
-                <Image className=" ml-3 mt-3" src="/mazeon_logo.png" priority alt="" width={50} height={50} />
-                <p className="text-2xl font-mono text-logthemstext ml-7 mt-3">
-                  Mazeon
-                </p>
-                <div className="hidden lg:block mr-4 ml-auto">
-                  <div className="rounded-full m-3">
-                    <Image
-                      className="rounded-full"
-                      src={
-                        UserProfile.image === ""
-                          ? "https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999"
-                          : `${UserProfile.image}`
-                      }
-                      priority
-                      alt=""
-                      width={40}
-                      height={40}
-                    />
-                  </div>
-                </div>
-                <div className={`ml-auto lg:hidden w-52 ${ MenuIsActive ? 'bg-logtheme fixed right-0 top-0 border-l-2 border-x-logthemstext ' : ""}`}>
-                  <div className={`transition ease-in-out z-10 w-10 h-10 flex mr-5 justify-center flex-col items-center cursor-pointer lg:hidden ${MenuIsActive ? 'ml-5' : 'ml-auto'} `} onClick={() => setMenuisActive(!MenuIsActive)}>
-                    <div className={`w-6 h-0.5 bg-lighttext rounded-full mt-2 transform transition-all duration-300 ${ MenuIsActive ? "-rotate-160" : "rotate-0"}`}></div>
-                    <div className={`w-6 h-0.5 bg-lighttext rounded-full mt-2 transform transition-all duration-300 ${ MenuIsActive ? "rotate-160" : "rotate-0"}`}></div>
-                  </div>
-                  {MenuIsActive ? (<SideNav />) : (<></>)}
-                </div>
-              </div>
-              <div className="flex flex-col ">
-                      <span>
-                        Play Offline
+              <MainTopNav />
+              <div className={`flex flex-col text-lg text-lighttext font-mono items-center justify-center h-40`}>
+                      <span onClick={HandleSolo} className="bg-hovers hover:bg-logtheme w-32 text-center rounded-md hover:cursor-pointer mt-56">
+                        Play Solo
                       </span>
-                      <span>
+                      <span onClick={HandleOnline} className="bg-hovers hover:bg-logtheme w-32 text-center rounded-md hover:cursor-pointer mt-10">
                         Play Online
                       </span>
               </div>
           </div>
-        </>
+       
       )}
       
     </div>
@@ -93,6 +68,3 @@ const Home = () => {
 export default Home;
 
 
-// <button onClick={Logout} className="text-white bg-logthemstext p-2 m-5">
-// Logout
-// </button>

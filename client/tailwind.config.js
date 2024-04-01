@@ -15,7 +15,6 @@ module.exports = {
       rotate: {
         '160': '155deg',
       }
-
     },
     colors : {
       logtheme : '#4c7e9a',
@@ -26,6 +25,8 @@ module.exports = {
       white : '#eef3f7',
       green : '#b3ffb3',
       red : '#ffb3b3',
+      bred : "#ff8080",
+      opacity : "#00000066"
     }
   },
   plugins: [],

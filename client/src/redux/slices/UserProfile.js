@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const UserProfile = createSlice({
      name : "UserProfile",
-     initialState : {},
+     initialState : {image : ""},
      reducers : {
         SetProfile : (curval, action ) => {
             return action.payload
