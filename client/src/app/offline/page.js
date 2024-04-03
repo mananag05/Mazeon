@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { SetProfile } from "@/redux/slices/UserProfile";
 import LoaderLayout from "@/components/cssloader";
 import MainTopNav from "@/components/MainTopNav";
+import PlayGround from "@/components/canvas";
+
 
 const offline = () => {
   const [Loader, SetLoader] = useState(true);
@@ -28,8 +30,10 @@ const offline = () => {
 
   return <div>
     {Loader ? (<LoaderLayout />):(
+      <>
     <MainTopNav />
-    
+    <PlayGround />
+      </>
     )}</div>;
 };
 
