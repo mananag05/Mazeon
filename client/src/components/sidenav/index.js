@@ -34,7 +34,7 @@ const SideNav = ({ Logout }) => {
             <div className={`w-6 h-0.5 bg-lighttext rounded-full mt-2  transition-all  duration-500 ${isLoaded ? 'rotate-160' : ''}`}></div>
           </div>
         <span onClick={() => console.log("friend add")} className="transition-all p-2 text-center bg-body m-3 rounded-md mt-5 hover:cursor-pointer text-logthemstext border-2 border-logthemstext hover:bg-hovers">
-          Add Friend
+          Add Friends
         </span>
         <span
           onClick={Logout}
