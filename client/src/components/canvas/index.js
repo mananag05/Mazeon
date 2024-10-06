@@ -10,18 +10,18 @@ import { v4 as uuid } from "uuid";
 
 const PlayGround = ({ className }) => {
   const UserProfile = useSelector((state) => state.PROFILE);
-  const maze = useMemo(() => generateMaze(30, 50), []);
-  const [players] = useState([
+  const maze = useMemo(() => generateMaze(30,40), []);
+  const [playersPos , setPlayersPos] = useState([
     {
       name: "manan",
       user: UserProfile.email,
       position: { x: 0, y: 0 },
     },
-    {
-      name: "random",
-      user: "random",
-      position: { x: 0, y: 0 },
-    },
+    // {
+    //   name: "random",
+    //   user: "random",
+    //   position: { x: 0, y: 0 },
+    // },
   ]);
 
   const createCell = (cell, rowIndex, colIndex) => {
@@ -33,7 +33,7 @@ const PlayGround = ({ className }) => {
       borderTop: top === 0 ? "1px solid black" : "none",
     };
 
-    const playersInCell = players.filter(
+    const playersInCell = playersPos.filter(
       (player) =>
         player.position.x === colIndex && player.position.y === rowIndex
     );
@@ -62,8 +62,47 @@ const PlayGround = ({ className }) => {
     );
   };
 
+
   const handlePlayerMove = (key, userToMove) => {
-    console.log(key.code, userToMove);
+    const playerIndex = playersPos.findIndex((player) => player.user === userToMove);
+    const userCell = maze[playersPos[playerIndex].position.y][playersPos[playerIndex].position.x]
+    const playerPos = playersPos[playerIndex].position
+    if(key.code == 'KeyW') {
+      if(userCell[3] == 1){
+        setPlayersPos((prev) => {
+          const newPlayersPos = [...prev];
+          newPlayersPos[playerIndex].position = { x: playerPos.x - 1, y: playerPos.y };
+          return newPlayersPos;
+        })
+      }
+    }
+    if(key.code == 'KeyS'){
+      if(userCell[1] == 1){
+        setPlayersPos((prev) => {
+          const newPlayersPos = [...prev];
+          newPlayersPos[playerIndex].position = { x: playerPos.x + 1, y: playerPos.y };
+          return newPlayersPos;
+        })
+      }
+    }
+    if(key.code == 'KeyA'){
+      if(userCell[0] == 1){
+        setPlayersPos((prev) => {
+          const newPlayersPos = [...prev];
+          newPlayersPos[playerIndex].position = { x: playerPos.x, y: playerPos.y - 1 };
+          return newPlayersPos;
+        })
+      }
+    }
+    if(key.code == 'KeyD'){
+      if(userCell[2] == 1){
+        setPlayersPos((prev) => {
+          const newPlayersPos = [...prev];
+          newPlayersPos[playerIndex].position = { x: playerPos.x, y: playerPos.y + 1 };
+          return newPlayersPos;
+        })
+      }
+    }
   };
 
   useEffect(() => {
@@ -75,10 +114,10 @@ const PlayGround = ({ className }) => {
     };
   }, [UserProfile.email]);
 
+  console.log(playersPos[0].position)
+
   return (
-    <div
-      className={twMerge(`flex flex-col items-center mt-10`, className)}
-    >
+    <div className={twMerge(`flex flex-col items-center mt-10`, className)}>
       <div className="flex flex-row">
         {maze.map((row, i) => (
           <div key={i} className="flex flex-col">
@@ -90,23 +129,27 @@ const PlayGround = ({ className }) => {
       </div>
       <div className="md:hidden flex flex-col items-center mt-auto gap-5 mb-20">
         <HiArrowSmUp
+          onClick={() => handlePlayerMove({ code: "KeyW" }, UserProfile.email)}
           className="hover:cursor-pointer"
           color="#ce9c53"
           size={30}
         />
         <div className="flex gap-20">
           <HiArrowSmLeft
+            onClick={() => handlePlayerMove({ code: "KeyA" }, UserProfile.email)}
             className="hover:cursor-pointer"
             color="#ce9c53"
             size={30}
           />
           <HiArrowSmRight
+            onClick={() => handlePlayerMove({ code: "KeyD" }, UserProfile.email)}
             className="hover:cursor-pointer"
             color="#ce9c53"
             size={30}
           />
         </div>
         <HiArrowSmDown
+          onClick={() => handlePlayerMove({ code: "KeyS" }, UserProfile.email)}
           className="hover:cursor-pointer"
           color="#ce9c53"
           size={30}
